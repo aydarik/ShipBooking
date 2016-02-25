@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Root Context: определяет ресурсы, доступные всему приложению, всем сервлетам -->
+
+    <!-- Включаем опцию использования конфигурационных аннотаций (@Annotation-based configuration)-->
+    <context:annotation-config/>
+
+    <!-- Определяем папки, в которых будем автоматически искать бины-компоненты (@Component, @Service)  -->
+    <context:component-scan base-package="ru.gumerbaev.shipbooking.server.dao"/>
+
+    <bean id="data" class="ru.gumerbaev.shipbooking.server.service.DataServiceImpl"/>
+
+    <util:map id="serviceURLMapper" key-type="java.lang.String"
+              value-type="com.google.gwt.user.client.rpc.RemoteService">
+        <entry key="/data" value-ref="data"/>
+    </util:map>
+
+    <!-- Файл с настройками ресурсов для работы с данными (Data Access Resources) -->
+    <import resource="data.xml"/>
+
+    <!-- Файл с настройками безопасности -->
+    <import resource="security.xml"/>
+</beans>
